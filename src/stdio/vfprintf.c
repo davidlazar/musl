@@ -115,7 +115,7 @@ static const unsigned char states[]['z'-'A'+1] = {
 union arg
 {
 	uintmax_t i;
-	long double f;
+//	long double f;
 	void *p;
 };
 
@@ -144,8 +144,8 @@ static void pop_arg(union arg *arg, int type, va_list *ap)
 	break; case PDIFF:	arg->i = va_arg(*ap, ptrdiff_t);
 	break; case UIPTR:	arg->i = (uintptr_t)va_arg(*ap, void *);
 #endif
-	break; case DBL:	arg->f = va_arg(*ap, double);
-	break; case LDBL:	arg->f = va_arg(*ap, long double);
+//	break; case DBL:	arg->f = va_arg(*ap, double);
+//	break; case LDBL:	arg->f = va_arg(*ap, long double);
 	}
 }
 
@@ -189,6 +189,7 @@ static char *fmt_u(uintmax_t x, char *s)
 	return s;
 }
 
+#if 0
 static int fmt_fp(FILE *f, long double y, int w, int p, int fl, int t)
 {
 	uint32_t big[(LDBL_MAX_EXP+LDBL_MANT_DIG)/9+1];
@@ -419,6 +420,7 @@ static int fmt_fp(FILE *f, long double y, int w, int p, int fl, int t)
 
 	return MAX(w, pl+l);
 }
+#endif
 
 static int getint(char **s) {
 	int i;
@@ -611,7 +613,7 @@ static int printf_core(FILE *f, const char *fmt, va_list *ap, union arg *nl_arg,
 			continue;
 		case 'e': case 'f': case 'g': case 'a':
 		case 'E': case 'F': case 'G': case 'A':
-			l = fmt_fp(f, arg.f, w, p, fl, t);
+			//l = fmt_fp(f, arg.f, w, p, fl, t);
 			continue;
 		}
 
