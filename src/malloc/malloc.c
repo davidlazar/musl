@@ -193,7 +193,10 @@ static int init_malloc(size_t n)
 		return 0;
 	}
 
-	mal.brk = __brk(0) + 2*SIZE_ALIGN-1 & -SIZE_ALIGN;
+	// TODO Chucky thinks this was not portable...
+	// volatile because LLVM was optimizing it away
+	void volatile * volatile p = NULL;
+	mal.brk = __brk(p) + 2*SIZE_ALIGN-1 & -SIZE_ALIGN;
 
 	c = expand_heap(n);
 
