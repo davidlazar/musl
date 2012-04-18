@@ -22,16 +22,25 @@ static inline int a_ctz_64(uint64_t x)
 	return a_ctz_l(y);
 }
 
-static inline int a_cas(volatile int *p, int t, int s)
+static inline int a_cas(volatile int *reg, int oldval, int newval)
+//int compare_and_swap (int* reg, int oldval, int newval) 
 {
-	int old;
-	for (;;) {
-		if (!((int (*)(int, int, volatile int *))0xffff0fc0)(t, s, p))
-			return t;
-		if ((old=*p) != t)
-			return old;
-	}
+  int old_reg_val = *reg;
+  if (old_reg_val == oldval)
+     *reg = newval;
+  return old_reg_val;
 }
+//extern int a_cas(volatile int *p, int t, int s);
+//static inline int a_cas(volatile int *p, int t, int s);
+//{
+//	int old;
+//	for (;;) {
+//		if (!((int (*)(int, int, volatile int *))0xffff0fc0)(t, s, p))
+//			return t;
+//		if ((old=*p) != t)
+//			return old;
+//	}
+//}
 
 static inline void *a_cas_p(volatile void *p, void *t, void *s)
 {
