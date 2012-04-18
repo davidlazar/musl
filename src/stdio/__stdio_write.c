@@ -18,9 +18,11 @@ size_t __stdio_write(FILE *f, const unsigned char *buf, size_t len)
 	int iovcnt = 2;
 	ssize_t cnt;
 	for (;;) {
-		pthread_cleanup_push(cleanup, f);
-		cnt = syscall_cp(SYS_writev, f->fd, iov, iovcnt);
-		pthread_cleanup_pop(0);
+		//pthread_cleanup_push(cleanup, f);
+		//cnt = syscall_cp(SYS_writev, f->fd, iov, iovcnt);
+		cnt = syscall_cp(SYS_write, f->fd, iovs[0].iov_base, iovs[0].iov_len);
+		cnt += syscall_cp(SYS_write, f->fd, iovs[1].iov_base, iovs[1].iov_len);
+		//pthread_cleanup_pop(0);
 		if (cnt == rem) {
 			f->wend = f->buf + f->buf_size;
 			f->wpos = f->wbase = f->buf;
