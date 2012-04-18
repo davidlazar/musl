@@ -155,7 +155,8 @@ static struct chunk *expand_heap(size_t n)
 
 	lock(mal.brk_lock);
 
-	if (n > SIZE_MAX - mal.brk - 2*PAGE_SIZE) goto fail;
+	// TODO comparing pointer to int
+	//if (n > SIZE_MAX - mal.brk - 2*PAGE_SIZE) goto fail;
 	new = mal.brk + n + SIZE_ALIGN + PAGE_SIZE - 1 & -PAGE_SIZE;
 	n = new - mal.brk;
 
