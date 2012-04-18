@@ -47,8 +47,10 @@ extern struct __libc *__libc_loc(void) __attribute__((const));
 void __lock(volatile int *);
 int __lockfile(FILE *);
 void __unlockfile(FILE *);
-#define LOCK(x) (libc.threads_minus_1 ? (__lock(x),1) : ((void)(x),1))
-#define UNLOCK(x) (*(volatile int *)(x)=0)
+// #define LOCK(x) (libc.threads_minus_1 ? (__lock(x),1) : ((void)(x),1))
+// #define UNLOCK(x) (*(volatile int *)(x)=0)
+#define LOCK(x) {}
+#define UNLOCK(x) {}
 
 void __synccall(void (*)(void *), void *);
 void __synccall_wait(void);
